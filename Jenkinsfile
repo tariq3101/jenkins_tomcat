@@ -1,21 +1,20 @@
 pipeline {
     agent any
+
     stages {
-        stage ('Initialize') {
+        stage('GIT Checkout') {
             steps {
-                echo  "Initializing the Code File"
+                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/devopsbyhari/JenkinsTomcatExample.git']])
             }
         }
- 
-        stage ('Build') {
+        stage('Package') {
             steps {
-                echo 'Hello World'
+                echo 'maven is packaging project'
             }
         }
- 
-         stage ('Deploy') {
+        stage('Deploy') {
             steps {
-                echo 'Deployed an Artifact'
+                echo 'Deploying package into tomcat'
             }
         }
     }
