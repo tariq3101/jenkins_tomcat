@@ -2,20 +2,26 @@ pipeline {
     agent any
 
     stages {
-        stage('GIT Checkout') {
+        stage('GIT') {
             steps {
-                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/devopsbyhari/JenkinsTomcatExample.git']])
+                echo 'Welcome to GIT'
             }
         }
-        stage('Package') {
+		stage('Maven') {
             steps {
-                echo 'maven is packaging project'
+                echo 'Welcome to Maven'
             }
         }
-        stage('Deploy') {
+		stage('artifacts') {
             steps {
-                echo 'Deploying package into tomcat'
+                echo 'Welcome to artifacts '
             }
         }
+		stage('Deployment') {
+            steps {
+                echo 'Welcome to deploymment '
+            }
+        }
+		
     }
 }
