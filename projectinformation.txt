@@ -3,3 +3,4 @@ configured poll SCM
 welcome to automated deployment
 updated new changes 
 welcome to the project configurations
+welcome to automated project
