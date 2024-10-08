@@ -2,8 +2,8 @@ pipeline {
     agent any
     
     tools {
-        jdk 'java'
-        maven 'Maven'
+        jdk 'JDK 21'
+        maven 'maven'
     }
     
     environment {
