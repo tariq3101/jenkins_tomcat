@@ -1,27 +1,60 @@
 pipeline {
     agent any
-
+    
+    tools {
+        jdk 'JAVA_HOME'
+        maven 'MAVEN_HOME'
+    }
+    
+    environment {
+        // Define environment variables for Tomcat
+        WAR_FILE = 'target/roshambo.war' // Path to the generated WAR file (use forward slashes)
+        TOMCAT_URL = 'http://localhost:7080' // Tomcat server URL
+        TOMCAT_USER = 'manager' // Tomcat Manager username
+        TOMCAT_PASSWORD = 's3cret' // Tomcat Manager password
+    }
+    
     stages {
-        stage('GIT') {
+        stage('Clean Project') {
             steps {
-                echo 'Welcome to GIT'
+                bat "mvn clean"
             }
         }
-		stage('Maven') {
+
+        stage('Build Project') {
             steps {
-                echo 'Welcome to Maven'
+                bat "mvn package"
             }
         }
-		stage('artifacts') {
+
+        stage('Deploy to Tomcat') {
             steps {
-                echo 'Welcome to artifacts '
+                script {
+		    //in this case it will be C:\ProgramData\Jenkins\.jenkins\workspace\war-deploy-jenkins-tomcat
+                    def warFilePath = "${WORKSPACE}/${WAR_FILE}" // Use forward slashes in path
+                    echo "WAR file path: ${warFilePath}"
+                    
+                    // Check if the WAR file exists before deploying
+                    if (fileExists(warFilePath)) {
+                        echo 'WAR file found, proceeding with deployment...'
+                        
+                        // Deploy the WAR file to Tomcat using curl and Tomcat Manager API
+                        bat """
+                            curl --upload-file "${warFilePath}" \
+                            --user ${TOMCAT_USER}:${TOMCAT_PASSWORD} \
+                            "${TOMCAT_URL}/manager/text/deploy?path=/roshambo&update=true"
+                        """
+                    } else {
+                        error('WAR file not found! Build might have failed.')
+                    }
+                }
             }
         }
-		stage('Deployment') {
-            steps {
-                echo 'Welcome to deploymment '
-            }
+    }
+
+    post {
+        always {
+            echo 'Build completed'
         }
-		
     }
 }
