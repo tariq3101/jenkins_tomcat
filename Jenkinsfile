@@ -8,7 +8,7 @@ pipeline {
     
     environment {
         // Define environment variables for Tomcat
-        WAR_FILE = 'target/roshambo.war' // Path to the generated WAR file (use forward slashes)
+        WAR_FILE = 'target/java-tomcat-maven-example.war' // Path to the generated WAR file (use forward slashes)
         TOMCAT_URL = 'http://localhost:7080' // Tomcat server URL
         TOMCAT_USER = 'manager' // Tomcat Manager username
         TOMCAT_PASSWORD = 's3cret' // Tomcat Manager password
