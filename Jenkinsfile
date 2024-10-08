@@ -17,13 +17,13 @@ pipeline {
     stages {
         stage('Clean Project') {
             steps {
-                bat "mvn clean"
+                sh "mvn clean"
             }
         }
 
         stage('Build Project') {
             steps {
-                bat "mvn package"
+                sh "mvn package"
             }
         }
 
@@ -39,7 +39,7 @@ pipeline {
                         echo 'WAR file found, proceeding with deployment...'
                         
                         // Deploy the WAR file to Tomcat using curl and Tomcat Manager API
-                        bat """
+                        sh """
                             curl --upload-file "${warFilePath}" \
                             --user ${TOMCAT_USER}:${TOMCAT_PASSWORD} \
                             "${TOMCAT_URL}/manager/text/deploy?path=/roshambo&update=true"
