@@ -17,20 +17,20 @@ pipeline {
     stages {
         stage('Clean Project') {
             steps {
-                sh "mvn clean"
+                bat "mvn clean"
             }
         }
 
         stage('Build Project') {
             steps {
-                sh "mvn package"
+                bat "mvn package"
             }
         }
 
         stage('Deploy to Tomcat') {
             steps {
                 script {
-		    //in this case it will be C:\ProgramData\Jenkins\.jenkins\workspace\war-deploy-jenkins-tomcat
+                    //in this case it will be C:\ProgramData\Jenkins\.jenkins\workspace\war-deploy-jenkins-tomcat
                     def warFilePath = "${WORKSPACE}/${WAR_FILE}" // Use forward slashes in path
                     echo "WAR file path: ${warFilePath}"
                     
@@ -39,9 +39,9 @@ pipeline {
                         echo 'WAR file found, proceeding with deployment...'
                         
                         // Deploy the WAR file to Tomcat using curl and Tomcat Manager API
-                        sh """
-                            curl --upload-file "${warFilePath}" \
-                            --user ${TOMCAT_USER}:${TOMCAT_PASSWORD} \
+                        bat """
+                            curl --upload-file "${warFilePath}" ^
+                            --user ${TOMCAT_USER}:${TOMCAT_PASSWORD} ^
                             "${TOMCAT_URL}/manager/text/deploy?path=/roshambo&update=true"
                         """
                     } else {
