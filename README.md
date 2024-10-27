@@ -52,3 +52,9 @@ The application will be available on `http://localhost:8080`.
      </plugins>
    </build>
    ```
+
+
+<role rolename="manager-gui"/>
+<role rolename="admin-gui"/>
+<user username="yourUsername" password="yourPassword" roles="manager-gui,admin-gui"/>
+Replace "yourUsername" and "yourPassword" with the username and password you want to use.
