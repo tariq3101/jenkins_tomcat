@@ -52,9 +52,11 @@ The application will be available on `http://localhost:8080`.
      </plugins>
    </build>
    ```
+   ```
    ls -al *.sh
    chmod +x *.sh
    ./startup.sh
+   ```
 
 ```
 <role rolename="manager-gui"/>
